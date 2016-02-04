@@ -29,6 +29,8 @@ class MasterViewController: UITableViewController {
         
         if let storedData = DataManager.sharedInstance.readObjectsFromFile() {
             objects = storedData
+            
+            objects.sortInPlace { $0.startDate.daysSinceToday() < $1.startDate.daysSinceToday() }
         }
     }
     
