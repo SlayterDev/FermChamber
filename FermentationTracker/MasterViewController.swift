@@ -18,6 +18,7 @@ class MasterViewController: UITableViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
+        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .Plain, target: nil, action: nil)
         self.navigationItem.title = "Ferm Chamber"
         
         let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
@@ -33,16 +34,12 @@ class MasterViewController: UITableViewController {
             objects.sortInPlace { $0.startDate.daysSinceToday() < $1.startDate.daysSinceToday() }
         }
     }
-    
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        self.tableView.reloadData()
-    }
 
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
         super.viewWillAppear(animated)
+        
+        self.tableView.reloadData()
     }
 
     override func didReceiveMemoryWarning() {
@@ -103,7 +100,7 @@ class MasterViewController: UITableViewController {
 			days = object.startDate.daysSinceToday()
 		}
 		
-        cell.textLabel!.text = (object.name == "") ? "New Beer" : object.name
+        cell.textLabel!.text = (object.name == "") ? "New \(object.type.rawValue)" : object.name
         
         cell.detailTextLabel!.text = String(format: "%d day(s) | %.3f", arguments: [days, object.og])
         
@@ -119,6 +116,7 @@ class MasterViewController: UITableViewController {
         if editingStyle == .Delete {
             objects.removeAtIndex(indexPath.row)
             tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            DataManager.sharedInstance.writeObjectsToFile(objects)
         }
     }
 

@@ -39,7 +39,10 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         // Update the user interface for the detail item.
         if let detail = self.detailItem {
             startDateField?.text = dateFormatter.stringFromDate(detail.startDate)
-            ogField?.text = String(format: "%.3f", arguments: [detail.og])
+            
+            if detail.og != 0 {
+                ogField?.text = String(format: "%.3f", arguments: [detail.og])
+            }
             
             if let fg = detailItem!.fg {
                 fgField?.text = String(format: "%.3f", arguments: [fg])
@@ -94,7 +97,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			$0.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).CGColor
 			$0.layer.shadowOpacity = 1.0
 			$0.layer.shadowRadius = 0
-			$0.layer.shadowOffset = CGSizeMake(0, 2.0)
+			$0.layer.shadowOffset = CGSizeMake(0, 1.5)
 			
 			$0.setTitle("Select Type", forState: .Normal)
 			$0.backgroundColor = DarkBaseColor
@@ -206,7 +209,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			$0.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).CGColor
 			$0.layer.shadowOpacity = 1.0
 			$0.layer.shadowRadius = 0
-			$0.layer.shadowOffset = CGSizeMake(0, 2.0)
+			$0.layer.shadowOffset = CGSizeMake(0, 1.5)
 			
 			$0.setTitle("Package Beer", forState: .Normal)
 			$0.backgroundColor = DarkBaseColor
@@ -222,6 +225,14 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         calculateABV()
     }
 	
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        if let masterView = self.navigationController?.viewControllers[0] as? MasterViewController {
+            DataManager.sharedInstance.writeObjectsToFile(masterView.objects)
+        }
+    }
+    
 	override func viewDidLayoutSubviews() {
 		super.viewDidLayoutSubviews()
 		
@@ -235,7 +246,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
     
     func textFieldDidEndEditing(textField: UITextField) {
         detailItem!.name = nameField!.text!
-        print("End editing")
+        
         if let og = ogField!.text {
             if let ogFloat = Float(og) {
                 detailItem!.og = ogFloat
