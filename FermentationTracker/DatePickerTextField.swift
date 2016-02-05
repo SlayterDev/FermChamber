@@ -44,7 +44,7 @@ class DatePickerTextField: SharedTextField {
         self.inputView = datePicker
         
         // Create "Done" button to close date picker
-        let accessoryView = DoneAccessoryView(frame: CGRectMake(0.0, 0.0, self.parentVC!.view.frame.size.width, 30.0))
+        let accessoryView = DoneAccessoryView(frame: CGRectMake(0.0, 0.0, self.parentVC!.view.frame.size.width, 40.0))
         accessoryView.doneButton!.addTarget(self, action: "closeDatePicker", forControlEvents: UIControlEvents.TouchUpInside)
         self.inputAccessoryView = accessoryView
     }

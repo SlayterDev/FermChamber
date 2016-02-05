@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		024F7CF51C64E87900B96794 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4197247C1C63E0780010CA81 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0276E0DB1C6416B4004D1174 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0276E0DA1C6416B4004D1174 /* Constants.swift */; };
 		4197243C1C63B42E0010CA81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4197243B1C63B42E0010CA81 /* AppDelegate.swift */; };
 		4197243E1C63B42E0010CA81 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4197243D1C63B42E0010CA81 /* MasterViewController.swift */; };
@@ -22,7 +23,6 @@
 		419724721C63C0F40010CA81 /* DatePickerTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 419724711C63C0F40010CA81 /* DatePickerTextField.swift */; };
 		419724741C63C12F0010CA81 /* DoneAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 419724731C63C12F0010CA81 /* DoneAccessoryView.swift */; };
 		419724761C63D1870010CA81 /* DataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 419724751C63D1870010CA81 /* DataManager.swift */; };
-		4197247D1C63E0780010CA81 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4197247C1C63E0780010CA81 /* Pods.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,7 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4197247D1C63E0780010CA81 /* Pods.framework in Frameworks */,
+				024F7CF51C64E87900B96794 /* Pods.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -282,6 +282,7 @@
 				TargetAttributes = {
 					419724371C63B42E0010CA81 = {
 						CreatedOnToolsVersion = 7.2;
+						DevelopmentTeam = Z67LVNYQSE;
 					};
 					4197244D1C63B42E0010CA81 = {
 						CreatedOnToolsVersion = 7.2;
@@ -515,6 +516,7 @@
 			baseConfigurationReference = CDF1CE0411A4910F6183E99A /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = FermentationTracker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
@@ -529,6 +531,7 @@
 			baseConfigurationReference = E04A5FA91C77C4CC24C67455 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = FermentationTracker/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";

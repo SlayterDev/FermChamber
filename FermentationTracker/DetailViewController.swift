@@ -48,6 +48,8 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 		
 			anchorView?.setTitle(self.detailItem!.type.rawValue, forState: .Normal)
 			packageButton?.setTitle("Package \(self.detailItem!.type.rawValue)", forState: .Normal)
+			
+			self.navigationItem.title = self.detailItem!.type.rawValue
         }
     }
 
@@ -105,10 +107,11 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			$0.backgroundColor = BaseColor
 			$0.textColor = DarkAccent
 			
-			$0.selectionAction = { [unowned self] (index, item) in
+			$0.selectionAction = { (index, item) in
 				self.anchorView!.setTitle(item, forState: .Normal)
 				self.packageButton!.setTitle("Package \(item)", forState: .Normal)
 				self.detailItem!.type = BeverageType(rawValue: item)!
+				self.navigationItem.title = item
 			}
 		}
 		
@@ -150,7 +153,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
             $0.keyboardType = .DecimalPad
             $0.delegate = self
             
-            let accessoryView = DoneAccessoryView(frame: CGRectMake(0.0, 0.0, self.view.frame.size.width, 30.0))
+            let accessoryView = DoneAccessoryView(frame: CGRectMake(0.0, 0.0, self.view.frame.size.width, 40.0))
             accessoryView.doneButton!.addTarget($0, action: "resignFirstResponder", forControlEvents: UIControlEvents.TouchUpInside)
             $0.inputAccessoryView = accessoryView
         }
@@ -168,7 +171,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
             $0.keyboardType = .DecimalPad
             $0.delegate = self
             
-            let accessoryView = DoneAccessoryView(frame: CGRectMake(0.0, 0.0, self.view.frame.size.width, 30.0))
+            let accessoryView = DoneAccessoryView(frame: CGRectMake(0.0, 0.0, self.view.frame.size.width, 40.0))
             accessoryView.doneButton!.addTarget($0, action: "resignFirstResponder", forControlEvents: UIControlEvents.TouchUpInside)
             $0.inputAccessoryView = accessoryView
         }
