@@ -90,11 +90,20 @@ class MasterViewController: UITableViewController {
         cell.textLabel!.font = UIFont.systemFontOfSize(22)
         cell.detailTextLabel!.textColor = UIColor.darkGrayColor()
         
-        
         let object = objects[indexPath.row]
+		
+		let days: Int!
+		if let endDate = object.endDate {
+			days = object.startDate.daysSinceDate(endDate)
+			cell.detailTextLabel!.textColor = DarkBaseColor
+			cell.detailTextLabel!.font = UIFont.boldSystemFontOfSize(cell.detailTextLabel!.font.pointSize)
+		} else {
+			days = object.startDate.daysSinceToday()
+		}
+		
         cell.textLabel!.text = (object.name == "") ? "New Beer" : object.name
         
-        cell.detailTextLabel!.text = String(format: "%d day(s) | %.3f", arguments: [object.startDate.daysSinceToday(), object.og])
+        cell.detailTextLabel!.text = String(format: "%d day(s) | %.3f", arguments: [days, object.og])
         
         return cell
     }

@@ -24,12 +24,13 @@ class Beverage: NSObject {
     var og: Float
     var fg: Float?
     
-    var type: BeverageType?
+    var type: BeverageType
     
     init(name: String, og: Float, startDate: NSDate) {
         self.name = name
         self.og = og
         self.startDate = startDate
+		self.type = .Beer
     }
     
     init(coder aDecoder: NSCoder!) {
@@ -41,9 +42,7 @@ class Beverage: NSObject {
             self.fg = fgVal as? Float
         }
 		
-		if let typeVal = aDecoder.decodeObjectForKey("type") {
-			self.type = BeverageType(rawValue: typeVal as! String)
-		}
+		self.type = BeverageType(rawValue: (aDecoder.decodeObjectForKey("type") as! String))!
 		
 		if let endDateVal = aDecoder.decodeObjectForKey("endDate") {
 			self.endDate = endDateVal as? NSDate
@@ -54,24 +53,14 @@ class Beverage: NSObject {
         aCoder.encodeObject(self.name, forKey: "name")
         aCoder.encodeObject(self.og, forKey: "og")
         aCoder.encodeObject(self.startDate, forKey: "startDate")
+		aCoder.encodeObject(self.type.rawValue, forKey: "type")
         
         if let _ = self.fg {
             aCoder.encodeObject(self.fg!, forKey: "fg")
         }
 		
-		if let _ = self.type {
-			aCoder.encodeObject(self.type!.rawValue, forKey: "type")
-		}
-		
 		if let _ = self.endDate {
 			aCoder.encodeObject(self.endDate, forKey: "endDate")
 		}
-    }
-}
-
-class Beer: Beverage {
-    override init(name: String, og: Float, startDate: NSDate) {
-        super.init(name: name, og: og, startDate: startDate)
-        self.type = .Beer
     }
 }

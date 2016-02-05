@@ -9,15 +9,18 @@
 import Foundation
 
 extension NSDate {
-    func daysSinceToday() -> Int {
-        let start = self
-        let end = NSDate()
-        
-        let cal = NSCalendar.currentCalendar()
-        let unit: NSCalendarUnit = .Day
-        
-        let components = cal.components(unit, fromDate: start, toDate: end, options: NSCalendarOptions())
-        
-        return components.day
+	func daysSinceToday() -> Int {
+        return daysSinceDate(NSDate())
     }
+	
+	func daysSinceDate(end: NSDate) -> Int {
+		let start = self
+		
+		let cal = NSCalendar.currentCalendar()
+		let unit: NSCalendarUnit = .Day
+		
+		let components = cal.components(unit, fromDate: start, toDate: end, options: NSCalendarOptions())
+		
+		return components.day
+	}
 }

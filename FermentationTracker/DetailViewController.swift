@@ -24,6 +24,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 	
 	var dropDown: DropDown?
 	var anchorView: UIButton?
+	var packageButton: UIButton?
     
     var dateFormatter = NSDateFormatter()
 
@@ -44,16 +45,19 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
             if let fg = detailItem!.fg {
                 fgField?.text = String(format: "%.3f", arguments: [fg])
             }
-			
-			if let type = detailItem!.type {
-				anchorView?.setTitle(type.rawValue, forState: .Normal)
-			}
+		
+			anchorView?.setTitle(self.detailItem!.type.rawValue, forState: .Normal)
+			packageButton?.setTitle("Package \(self.detailItem!.type.rawValue)", forState: .Normal)
         }
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+		
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+
+		
         dateFormatter.dateFormat = "MM/dd/yyyy"
         
         nameField = SharedTextField().then {
@@ -103,7 +107,8 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			
 			$0.selectionAction = { [unowned self] (index, item) in
 				self.anchorView!.setTitle(item, forState: .Normal)
-				self.detailItem!.type = BeverageType(rawValue: item)
+				self.packageButton!.setTitle("Package \(item)", forState: .Normal)
+				self.detailItem!.type = BeverageType(rawValue: item)!
 			}
 		}
 		
@@ -180,7 +185,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
             $0.textAlignment = .Center
         }
 		
-		let _ = UIButton().then {
+		packageButton = UIButton().then {
 			self.view.addSubview($0)
 			$0.snp_makeConstraints { (make) -> Void in
 				make.top.equalTo(abvLabel!.snp_bottom).offset(20)
@@ -199,6 +204,8 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			$0.backgroundColor = DarkBaseColor
 			$0.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			$0.layer.cornerRadius = 15
+			
+			$0.addTarget(self, action: "package:", forControlEvents: .TouchUpInside)
 		}
 		
         self.configureView()
@@ -247,7 +254,14 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			detailItem!.startDate = date!
 		}
 		
-        timeLabel?.text = "\(date!.daysSinceToday()) day(s)"
+		let days: Int!
+		if let endDate = self.detailItem!.endDate {
+			days = date!.daysSinceDate(endDate)
+		} else {
+			days = date!.daysSinceToday()
+		}
+		
+        timeLabel?.text = "\(days) day(s)"
     }
     
     func calculateABV() {
@@ -266,6 +280,30 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			dropDown!.hide()
 		}
 	}
-    
+	
+	func package(sender: AnyObject) {
+		self.detailItem!.endDate = NSDate()
+		
+		let type = self.detailItem!.type.rawValue.lowercaseString
+		
+		UIAlertView(title: "Packaged!", message: "Your \(type) has been packaged! Ferm chamber will no longer count time for this \(type).", delegate: nil, cancelButtonTitle: "Ok").show()
+	}
+	
+	func keyboardWillShow(notification: NSNotification) {
+		if UIScreen.mainScreen().bounds.height >= 667 { return }
+		
+		if nameField!.isFirstResponder() || startDateField!.isFirstResponder() {
+			return
+		}
+		
+		if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().height {
+			
+			self.view.frame.origin.y -= keyboardSize - 25
+		}
+	}
+	
+	func keyboardWillHide(notification: NSNotification) {
+		self.view.frame.origin.y = 0
+	}
 }
 
