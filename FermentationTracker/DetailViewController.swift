@@ -15,6 +15,8 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 
     @IBOutlet weak var detailDescriptionLabel: UILabel!
     
+    var scrollView: UIScrollView?
+    
     var nameField: SharedTextField?
     var startDateField: DatePickerTextField?
     var timeLabel: UILabel?
@@ -44,7 +46,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
                 ogField?.text = String(format: "%.3f", arguments: [detail.og])
             }
             
-            if let fg = detailItem!.fg {
+            if let fg = detailItem?.fg {
                 fgField?.text = String(format: "%.3f", arguments: [fg])
             }
 		
@@ -70,22 +72,31 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 		
         dateFormatter.dateFormat = "MM/dd/yyyy"
         
-        nameField = SharedTextField().then {
+        scrollView = UIScrollView().then {
             self.view.addSubview($0)
+            $0.snp_makeConstraints { (make) in
+                make.edges.equalTo(self.view)
+            }
+        }
+        
+        
+        nameField = SharedTextField().then {
+            scrollView!.addSubview($0)
             $0.snp_makeConstraints { (make) -> Void in
-                make.top.equalTo(self.view).offset(75)
-                make.left.equalTo(self.view).offset(10)
-                make.width.equalTo(self.view).offset(-20)
+                make.top.equalTo(scrollView!).offset(75)
+                make.left.equalTo(scrollView!).offset(10)
+                make.width.equalTo(scrollView!).offset(-20)
                 make.height.equalTo(44)
             }
             
             $0.placeholder = "Name"
             $0.delegate = self
             $0.returnKeyType = .Done
+            $0.autocapitalizationType = .Words
         }
 		
 		anchorView = UIButton().then {
-			self.view.addSubview($0)
+			scrollView!.addSubview($0)
 			$0.snp_makeConstraints { (make) -> Void in
 				make.top.equalTo(nameField!.snp_bottom).offset(10)
 				make.left.equalTo(nameField!)
@@ -118,17 +129,17 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			$0.selectionAction = { (index, item) in
 				self.anchorView!.setTitle(item, forState: .Normal)
 				self.packageButton!.setTitle("Package \(item)", forState: .Normal)
-				self.detailItem!.type = BeverageType(rawValue: item)!
+				self.detailItem?.type = BeverageType(rawValue: item)!
 				self.navigationItem.title = item
 			}
 		}
 		
         startDateField = DatePickerTextField(frame: CGRectZero, parentVC: self).then {
-            self.view.addSubview($0)
+            scrollView!.addSubview($0)
             $0.snp_makeConstraints { (make) -> Void in
                 make.top.equalTo(anchorView!.snp_bottom).offset(30)
-                make.left.equalTo(self.view).offset(10)
-                make.width.equalTo(self.view).offset(-20)
+                make.left.equalTo(scrollView!).offset(10)
+                make.width.equalTo(scrollView!).offset(-20)
                 make.height.equalTo(44)
             }
             
@@ -137,11 +148,11 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         }
         
         timeLabel = UILabel().then {
-            self.view.addSubview($0)
+            scrollView!.addSubview($0)
             $0.snp_makeConstraints { (make) -> Void in
                 make.top.equalTo(startDateField!.snp_bottom).offset(5)
-                make.left.equalTo(self.view).offset(10)
-                make.width.equalTo(self.view).offset(-20)
+                make.left.equalTo(scrollView!).offset(10)
+                make.width.equalTo(scrollView!).offset(-20)
                 make.height.equalTo(44)
             }
             $0.text = "Hello World"
@@ -149,10 +160,10 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         }
         
         ogField = SharedTextField().then {
-            self.view.addSubview($0)
+            scrollView!.addSubview($0)
             $0.snp_makeConstraints { (make) -> Void in
                 make.top.equalTo(timeLabel!.snp_bottom).offset(20)
-                make.left.equalTo(self.view).offset(10)
+                make.left.equalTo(scrollView!).offset(10)
                 make.width.equalTo(nameField!).dividedBy(2).offset(-5)
                 make.height.equalTo(44)
             }
@@ -167,7 +178,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         }
         
         fgField = SharedTextField().then {
-            self.view.addSubview($0)
+            scrollView!.addSubview($0)
             $0.snp_makeConstraints { (make) -> Void in
                 make.top.equalTo(ogField!)
                 make.left.equalTo(ogField!.snp_right).offset(10)
@@ -185,11 +196,11 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         }
         
         abvLabel = UILabel().then {
-            self.view.addSubview($0)
+            scrollView!.addSubview($0)
             $0.snp_makeConstraints { (make) -> Void in
                 make.top.equalTo(ogField!.snp_bottom).offset(5)
-                make.left.equalTo(self.view).offset(10)
-                make.width.equalTo(self.view).offset(-20)
+                make.left.equalTo(scrollView!).offset(10)
+                make.width.equalTo(scrollView!).offset(-20)
                 make.height.equalTo(44)
             }
             $0.text = "Hello World"
@@ -197,7 +208,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         }
 		
 		packageButton = UIButton().then {
-			self.view.addSubview($0)
+			scrollView!.addSubview($0)
 			$0.snp_makeConstraints { (make) -> Void in
 				make.top.equalTo(abvLabel!.snp_bottom).offset(20)
 				make.left.equalTo(abvLabel!)
@@ -228,7 +239,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         
-        if let masterView = self.navigationController?.viewControllers[0] as? MasterViewController {
+        if let masterView = self.navigationController?.viewControllers.first as? MasterViewController {
             DataManager.sharedInstance.writeObjectsToFile(masterView.objects)
         }
     }
@@ -237,6 +248,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 		super.viewDidLayoutSubviews()
 		
 		dropDown!.bottomOffset = CGPoint(x: 0, y: anchorView!.bounds.height)
+        scrollView?.contentSize = CGSize(width: self.view.bounds.width, height: max(self.view.bounds.height, packageButton!.frame.origin.y + packageButton!.bounds.height + 15))
 	}
 
     override func didReceiveMemoryWarning() {
@@ -244,17 +256,31 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         // Dispose of any resources that can be recreated.
     }
     
+    func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
+        if let _ = self.detailItem {
+            return true
+        } else {
+            let leftNav = self.splitViewController?.viewControllers.first as! UINavigationController
+            if let masterView = leftNav.topViewController as? MasterViewController {
+                masterView.insertNewObject(NSObject())
+                return false
+            }
+        }
+        
+        return true
+    }
+    
     func textFieldDidEndEditing(textField: UITextField) {
-        detailItem!.name = nameField!.text!
+        detailItem?.name = nameField!.text!
         
         if let og = ogField!.text {
             if let ogFloat = Float(og) {
-                detailItem!.og = ogFloat
+                detailItem?.og = ogFloat
             }
         }
         if let fg = fgField!.text {
             if let fgFloat = Float(fg) {
-                detailItem!.fg = fgFloat
+                detailItem?.fg = fgFloat
             }
         }
         
@@ -267,17 +293,17 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
     }
     
     func didPickDate() {
-        let date = dateFormatter.dateFromString(startDateField!.text!)
+        guard let date = dateFormatter.dateFromString(startDateField!.text!) else { return }
 		
 		if let _ = self.detailItem {
-			detailItem!.startDate = date!
+			detailItem?.startDate = date
 		}
 		
 		let days: Int!
-		if let endDate = self.detailItem!.endDate {
-			days = date!.daysSinceDate(endDate)
+		if let endDate = self.detailItem?.endDate {
+			days = date.daysSinceDate(endDate)
 		} else {
-			days = date!.daysSinceToday()
+			days = date.daysSinceToday()
 		}
 		
         timeLabel?.text = "\(days) day(s)"
@@ -294,6 +320,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 	
 	func toggleDropDown(sender: AnyObject) {
 		if dropDown!.hidden {
+            self.view.endEditing(true)
 			dropDown!.show()
 		} else {
 			dropDown!.hide()
@@ -301,7 +328,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 	}
 	
 	func package(sender: AnyObject) {
-		self.detailItem!.endDate = NSDate()
+		self.detailItem?.endDate = NSDate()
 		
 		let type = self.detailItem!.type.rawValue.lowercaseString
 		
@@ -316,8 +343,9 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 		}
 		
 		if let keyboardSize = (notification.userInfo?[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.CGRectValue().height {
-			
-			self.view.frame.origin.y -= keyboardSize - 25
+            if self.view.frame.origin.y == 0 {
+                self.view.frame.origin.y -= keyboardSize - 25
+            }
 		}
 	}
 	
