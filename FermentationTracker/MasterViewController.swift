@@ -89,6 +89,8 @@ class MasterViewController: UITableViewController {
         cell.textLabel!.font = UIFont.systemFontOfSize(22)
         cell.detailTextLabel!.textColor = UIColor.darkGrayColor()
         
+        cell.accessoryType = .DisclosureIndicator
+        
         let object = objects[indexPath.row]
 		
 		let days: Int!

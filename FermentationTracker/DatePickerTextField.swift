@@ -74,6 +74,17 @@ class DatePickerTextField: SharedTextField {
         return super.resignFirstResponder()
     }
     
+    override func becomeFirstResponder() -> Bool {
+        if self.text != "" {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "MM/dd/yyyy"
+            
+            datePicker.date = dateFormatter.dateFromString(self.text!)!
+        }
+        
+        return super.becomeFirstResponder()
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
