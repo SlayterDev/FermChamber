@@ -21,7 +21,7 @@ class DoneAccessoryView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.backgroundColor = UIColor(red: 0.239, green: 0.722, blue: 0.686, alpha: 1.00)
+        self.backgroundColor = MidColor
         doneButton = UIButton(type: UIButtonType.Custom).then {
             
             self.addSubview($0)

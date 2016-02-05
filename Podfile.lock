@@ -1,13 +1,16 @@
 PODS:
+  - DropDown (0.1.4)
   - SnapKit (0.15.0)
   - Then (1.0.0)
 
 DEPENDENCIES:
+  - DropDown (~> 0.1)
   - SnapKit (~> 0.15.0)
   - Then (~> 1.0)
 
 SPEC CHECKSUMS:
+  DropDown: 09ab078ba0f11d426689526b45d4d5179420e321
   SnapKit: 4962eed2ee18e48cbd2b2292fffc57efe7235f87
   Then: 291c4c489fb76349a987c0f1769a30b3551d091e
 
-COCOAPODS: 0.39.0
+COCOAPODS: 0.38.2

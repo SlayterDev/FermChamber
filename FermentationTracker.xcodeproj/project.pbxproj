@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0276E0DB1C6416B4004D1174 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0276E0DA1C6416B4004D1174 /* Constants.swift */; };
 		4197243C1C63B42E0010CA81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4197243B1C63B42E0010CA81 /* AppDelegate.swift */; };
 		4197243E1C63B42E0010CA81 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4197243D1C63B42E0010CA81 /* MasterViewController.swift */; };
 		419724401C63B42E0010CA81 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4197243F1C63B42E0010CA81 /* DetailViewController.swift */; };
@@ -42,6 +43,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0276E0DA1C6416B4004D1174 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		419724381C63B42E0010CA81 /* FermentationTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FermentationTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4197243B1C63B42E0010CA81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4197243D1C63B42E0010CA81 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 			children = (
 				419724441C63B42E0010CA81 /* Assets.xcassets */,
 				4197243B1C63B42E0010CA81 /* AppDelegate.swift */,
+				0276E0DA1C6416B4004D1174 /* Constants.swift */,
 				419724791C63D25C0010CA81 /* Controllers */,
 				4197247A1C63D26C0010CA81 /* Data Models */,
 				4197247B1C63D2770010CA81 /* Shared UI */,
@@ -365,6 +368,7 @@
 				4197246C1C63B4670010CA81 /* Beverage.swift in Sources */,
 				4197246E1C63B9870010CA81 /* SharedTextField.swift in Sources */,
 				419724721C63C0F40010CA81 /* DatePickerTextField.swift in Sources */,
+				0276E0DB1C6416B4004D1174 /* Constants.swift in Sources */,
 				4197243C1C63B42E0010CA81 /* AppDelegate.swift in Sources */,
 				419724701C63BFD20010CA81 /* DateExtensions.swift in Sources */,
 				419724761C63D1870010CA81 /* DataManager.swift in Sources */,
@@ -539,6 +543,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = FermentationTrackerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SlayterDevelopment.FermentationTrackerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -551,6 +556,7 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				INFOPLIST_FILE = FermentationTrackerTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SlayterDevelopment.FermentationTrackerTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -562,6 +568,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = FermentationTrackerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SlayterDevelopment.FermentationTrackerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -574,6 +581,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				INFOPLIST_FILE = FermentationTrackerUITests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.SlayterDevelopment.FermentationTrackerUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";

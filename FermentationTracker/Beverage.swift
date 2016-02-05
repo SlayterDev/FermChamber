@@ -8,16 +8,18 @@
 
 import Foundation
 
-enum BeverageType {
-    case Beer
-    case Cider
-    case Wine
-    case Mead
+enum BeverageType: String {
+    case Beer  = "Beer"
+	case Wine  = "Wine"
+    case Cider = "Cider"
+    case Mead  = "Mead"
 }
 
 class Beverage: NSObject {
     var name: String
+	
     var startDate: NSDate
+	var endDate: NSDate?
     
     var og: Float
     var fg: Float?
@@ -37,9 +39,15 @@ class Beverage: NSObject {
         
         if let fgVal = aDecoder.decodeObjectForKey("fg") {
             self.fg = fgVal as? Float
-        } else {
-            print("no fg")
         }
+		
+		if let typeVal = aDecoder.decodeObjectForKey("type") {
+			self.type = BeverageType(rawValue: typeVal as! String)
+		}
+		
+		if let endDateVal = aDecoder.decodeObjectForKey("endDate") {
+			self.endDate = endDateVal as? NSDate
+		}
     }
     
     func encodeWithCoder(aCoder: NSCoder!) {
@@ -49,9 +57,15 @@ class Beverage: NSObject {
         
         if let _ = self.fg {
             aCoder.encodeObject(self.fg!, forKey: "fg")
-        } else {
-            print("No FG")
         }
+		
+		if let _ = self.type {
+			aCoder.encodeObject(self.type!.rawValue, forKey: "type")
+		}
+		
+		if let _ = self.endDate {
+			aCoder.encodeObject(self.endDate, forKey: "endDate")
+		}
     }
 }
 

@@ -9,6 +9,7 @@
 import UIKit
 import Then
 import SnapKit
+import DropDown
 
 class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDelegate {
 
@@ -20,6 +21,9 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
     var ogField: SharedTextField?
     var fgField: SharedTextField?
     var abvLabel: UILabel?
+	
+	var dropDown: DropDown?
+	var anchorView: UIButton?
     
     var dateFormatter = NSDateFormatter()
 
@@ -40,6 +44,10 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
             if let fg = detailItem!.fg {
                 fgField?.text = String(format: "%.3f", arguments: [fg])
             }
+			
+			if let type = detailItem!.type {
+				anchorView?.setTitle(type.rawValue, forState: .Normal)
+			}
         }
     }
 
@@ -61,11 +69,48 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
             $0.delegate = self
             $0.returnKeyType = .Done
         }
-        
+		
+		anchorView = UIButton().then {
+			self.view.addSubview($0)
+			$0.snp_makeConstraints { (make) -> Void in
+				make.top.equalTo(nameField!.snp_bottom).offset(10)
+				make.left.equalTo(nameField!)
+				make.width.equalTo(nameField!)
+				make.height.equalTo(nameField!)
+			}
+			
+			$0.layer.masksToBounds = false
+			$0.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).CGColor
+			$0.layer.shadowOpacity = 1.0
+			$0.layer.shadowRadius = 0
+			$0.layer.shadowOffset = CGSizeMake(0, 2.0)
+			
+			$0.setTitle("Select Type", forState: .Normal)
+			$0.backgroundColor = DarkBaseColor
+			$0.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+			$0.layer.cornerRadius = 15
+			
+			$0.addTarget(self, action: "toggleDropDown:", forControlEvents: .TouchUpInside)
+		}
+		
+		dropDown = DropDown().then {
+			$0.anchorView = anchorView
+			$0.direction = .Any
+			$0.dataSource = ["Beer", "Wine", "Cider", "Mead"]
+			$0.dismissMode = .Automatic
+			$0.backgroundColor = BaseColor
+			$0.textColor = DarkAccent
+			
+			$0.selectionAction = { [unowned self] (index, item) in
+				self.anchorView!.setTitle(item, forState: .Normal)
+				self.detailItem!.type = BeverageType(rawValue: item)
+			}
+		}
+		
         startDateField = DatePickerTextField(frame: CGRectZero, parentVC: self).then {
             self.view.addSubview($0)
             $0.snp_makeConstraints { (make) -> Void in
-                make.top.equalTo(nameField!.snp_bottom).offset(30)
+                make.top.equalTo(anchorView!.snp_bottom).offset(30)
                 make.left.equalTo(self.view).offset(10)
                 make.width.equalTo(self.view).offset(-20)
                 make.height.equalTo(44)
@@ -134,12 +179,39 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
             $0.text = "Hello World"
             $0.textAlignment = .Center
         }
-        
+		
+		let _ = UIButton().then {
+			self.view.addSubview($0)
+			$0.snp_makeConstraints { (make) -> Void in
+				make.top.equalTo(abvLabel!.snp_bottom).offset(20)
+				make.left.equalTo(abvLabel!)
+				make.width.equalTo(abvLabel!)
+				make.height.equalTo(40)
+			}
+			
+			$0.layer.masksToBounds = false
+			$0.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).CGColor
+			$0.layer.shadowOpacity = 1.0
+			$0.layer.shadowRadius = 0
+			$0.layer.shadowOffset = CGSizeMake(0, 2.0)
+			
+			$0.setTitle("Package Beer", forState: .Normal)
+			$0.backgroundColor = DarkBaseColor
+			$0.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+			$0.layer.cornerRadius = 15
+		}
+		
         self.configureView()
         
         didPickDate()
         calculateABV()
     }
+	
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		
+		dropDown!.bottomOffset = CGPoint(x: 0, y: anchorView!.bounds.height)
+	}
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -170,9 +242,12 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
     
     func didPickDate() {
         let date = dateFormatter.dateFromString(startDateField!.text!)
-        detailItem!.startDate = date!
-        
-        timeLabel?.text = "\(date!.daysSinceToday()) days"
+		
+		if let _ = self.detailItem {
+			detailItem!.startDate = date!
+		}
+		
+        timeLabel?.text = "\(date!.daysSinceToday()) day(s)"
     }
     
     func calculateABV() {
@@ -183,6 +258,14 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         
         abvLabel!.text = String(format: "%.2f%% ABV", arguments: [abv])
     }
+	
+	func toggleDropDown(sender: AnyObject) {
+		if dropDown!.hidden {
+			dropDown!.show()
+		} else {
+			dropDown!.hide()
+		}
+	}
     
 }
 
