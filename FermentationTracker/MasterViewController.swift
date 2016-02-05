@@ -54,6 +54,8 @@ class MasterViewController: UITableViewController {
         objects.insert(Beverage(name: "", og: 0.0, startDate: NSDate()), atIndex: 0)
         let indexPath = NSIndexPath(forRow: 0, inSection: 0)
         self.tableView.insertRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+		self.tableView.selectRowAtIndexPath(indexPath, animated: true, scrollPosition: .Top)
+		self.performSegueWithIdentifier("showDetail", sender: nil)
     }
 
     // MARK: - Segues

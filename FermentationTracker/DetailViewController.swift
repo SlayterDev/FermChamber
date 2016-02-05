@@ -38,7 +38,6 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
     func configureView() {
         // Update the user interface for the detail item.
         if let detail = self.detailItem {
-            nameField?.text = detail.name
             startDateField?.text = dateFormatter.stringFromDate(detail.startDate)
             ogField?.text = String(format: "%.3f", arguments: [detail.og])
             
@@ -46,10 +45,16 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
                 fgField?.text = String(format: "%.3f", arguments: [fg])
             }
 		
-			anchorView?.setTitle(self.detailItem!.type.rawValue, forState: .Normal)
-			packageButton?.setTitle("Package \(self.detailItem!.type.rawValue)", forState: .Normal)
+			anchorView?.setTitle(detail.type.rawValue, forState: .Normal)
+			packageButton?.setTitle("Package \(detail.type.rawValue)", forState: .Normal)
 			
-			self.navigationItem.title = self.detailItem!.type.rawValue
+			self.navigationItem.title = detail.type.rawValue
+			
+			if (detail.name == "") {
+				nameField?.becomeFirstResponder()
+			} else {
+				nameField?.text = detail.name
+			}
         }
     }
 
