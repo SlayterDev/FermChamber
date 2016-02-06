@@ -82,7 +82,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         
         nameField = SharedTextField().then {
             scrollView!.addSubview($0)
-            $0.snp_makeConstraints { (make) -> Void in
+            $0.snp_makeConstraints { (make) in
                 make.top.equalTo(scrollView!).offset(75)
                 make.left.equalTo(scrollView!).offset(10)
                 make.width.equalTo(scrollView!).offset(-20)
@@ -97,7 +97,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 		
 		anchorView = UIButton().then {
 			scrollView!.addSubview($0)
-			$0.snp_makeConstraints { (make) -> Void in
+			$0.snp_makeConstraints { (make) in
 				make.top.equalTo(nameField!.snp_bottom).offset(10)
 				make.left.equalTo(nameField!)
 				make.width.equalTo(nameField!)
@@ -136,7 +136,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 		
         startDateField = DatePickerTextField(frame: CGRectZero, parentVC: self).then {
             scrollView!.addSubview($0)
-            $0.snp_makeConstraints { (make) -> Void in
+            $0.snp_makeConstraints { (make) in
                 make.top.equalTo(anchorView!.snp_bottom).offset(30)
                 make.left.equalTo(scrollView!).offset(10)
                 make.width.equalTo(scrollView!).offset(-20)
@@ -149,7 +149,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         
         timeLabel = UILabel().then {
             scrollView!.addSubview($0)
-            $0.snp_makeConstraints { (make) -> Void in
+            $0.snp_makeConstraints { (make) in
                 make.top.equalTo(startDateField!.snp_bottom).offset(5)
                 make.left.equalTo(scrollView!).offset(10)
                 make.width.equalTo(scrollView!).offset(-20)
@@ -161,7 +161,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         
         ogField = SharedTextField().then {
             scrollView!.addSubview($0)
-            $0.snp_makeConstraints { (make) -> Void in
+            $0.snp_makeConstraints { (make) in
                 make.top.equalTo(timeLabel!.snp_bottom).offset(20)
                 make.left.equalTo(scrollView!).offset(10)
                 make.width.equalTo(nameField!).dividedBy(2).offset(-5)
@@ -179,7 +179,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         
         fgField = SharedTextField().then {
             scrollView!.addSubview($0)
-            $0.snp_makeConstraints { (make) -> Void in
+            $0.snp_makeConstraints { (make) in
                 make.top.equalTo(ogField!)
                 make.left.equalTo(ogField!.snp_right).offset(10)
                 make.width.equalTo(ogField!)
@@ -197,7 +197,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         
         abvLabel = UILabel().then {
             scrollView!.addSubview($0)
-            $0.snp_makeConstraints { (make) -> Void in
+            $0.snp_makeConstraints { (make) in
                 make.top.equalTo(ogField!.snp_bottom).offset(5)
                 make.left.equalTo(scrollView!).offset(10)
                 make.width.equalTo(scrollView!).offset(-20)
@@ -209,7 +209,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 		
 		packageButton = UIButton().then {
 			scrollView!.addSubview($0)
-			$0.snp_makeConstraints { (make) -> Void in
+			$0.snp_makeConstraints { (make) in
 				make.top.equalTo(abvLabel!.snp_bottom).offset(20)
 				make.left.equalTo(abvLabel!)
 				make.width.equalTo(abvLabel!)
