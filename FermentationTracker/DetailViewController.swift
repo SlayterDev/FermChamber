@@ -248,7 +248,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 		super.viewDidLayoutSubviews()
 		
 		dropDown!.bottomOffset = CGPoint(x: 0, y: anchorView!.bounds.height)
-        scrollView?.contentSize = CGSize(width: self.view.bounds.width, height: max(self.view.bounds.height, packageButton!.frame.origin.y + packageButton!.bounds.height + 15))
+        scrollView?.contentSize = CGSize(width: self.view.bounds.width, height: max(self.view.bounds.height, packageButton!.frame.maxY + 15))
 	}
 
     override func didReceiveMemoryWarning() {
