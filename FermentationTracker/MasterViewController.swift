@@ -16,6 +16,9 @@ class MasterViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+		
+		self.tableView.separatorInset = UIEdgeInsets(top: 0, left: 15, bottom: 0, right: 0)
+		
         // Do any additional setup after loading the view, typically from a nib.
         self.navigationItem.leftBarButtonItem = self.editButtonItem()
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .Plain, target: nil, action: nil)
@@ -101,6 +104,8 @@ class MasterViewController: UITableViewController {
 		} else {
 			days = object.startDate.daysSinceToday()
 		}
+		
+		cell.imageView!.image = UIImage(named: object.type.rawValue.lowercaseString)?.makeThumbnailOfSize(CGSize(width: 40, height: 40))
 		
         cell.textLabel!.text = (object.name == "") ? "New \(object.type.rawValue)" : object.name
         

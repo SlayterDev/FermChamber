@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		024F7CF51C64E87900B96794 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4197247C1C63E0780010CA81 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0276E0DB1C6416B4004D1174 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0276E0DA1C6416B4004D1174 /* Constants.swift */; };
+		02DF9FEE1C6674140044DD0D /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DF9FED1C6674140044DD0D /* UIImageExtensions.swift */; };
 		4197243C1C63B42E0010CA81 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4197243B1C63B42E0010CA81 /* AppDelegate.swift */; };
 		4197243E1C63B42E0010CA81 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4197243D1C63B42E0010CA81 /* MasterViewController.swift */; };
 		419724401C63B42E0010CA81 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4197243F1C63B42E0010CA81 /* DetailViewController.swift */; };
@@ -44,6 +45,7 @@
 
 /* Begin PBXFileReference section */
 		0276E0DA1C6416B4004D1174 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		02DF9FED1C6674140044DD0D /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		419724381C63B42E0010CA81 /* FermentationTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FermentationTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4197243B1C63B42E0010CA81 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		4197243D1C63B42E0010CA81 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
@@ -95,6 +97,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		02DF9FEF1C6679BC0044DD0D /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				02DF9FED1C6674140044DD0D /* UIImageExtensions.swift */,
+				4197246F1C63BFD20010CA81 /* DateExtensions.swift */,
+			);
+			name = Extensions;
+			sourceTree = "<group>";
+		};
 		4197242F1C63B42E0010CA81 = {
 			isa = PBXGroup;
 			children = (
@@ -123,6 +134,7 @@
 				419724441C63B42E0010CA81 /* Assets.xcassets */,
 				4197243B1C63B42E0010CA81 /* AppDelegate.swift */,
 				0276E0DA1C6416B4004D1174 /* Constants.swift */,
+				02DF9FEF1C6679BC0044DD0D /* Extensions */,
 				419724791C63D25C0010CA81 /* Controllers */,
 				4197247A1C63D26C0010CA81 /* Data Models */,
 				4197247B1C63D2770010CA81 /* Shared UI */,
@@ -189,7 +201,6 @@
 			isa = PBXGroup;
 			children = (
 				4197246D1C63B9870010CA81 /* SharedTextField.swift */,
-				4197246F1C63BFD20010CA81 /* DateExtensions.swift */,
 				419724711C63C0F40010CA81 /* DatePickerTextField.swift */,
 				419724731C63C12F0010CA81 /* DoneAccessoryView.swift */,
 			);
@@ -364,6 +375,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				419724401C63B42E0010CA81 /* DetailViewController.swift in Sources */,
+				02DF9FEE1C6674140044DD0D /* UIImageExtensions.swift in Sources */,
 				4197243E1C63B42E0010CA81 /* MasterViewController.swift in Sources */,
 				4197246C1C63B4670010CA81 /* Beverage.swift in Sources */,
 				4197246E1C63B9870010CA81 /* SharedTextField.swift in Sources */,
