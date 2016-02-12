@@ -89,8 +89,8 @@ class MasterViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
         
-        cell.textLabel!.font = UIFont.systemFontOfSize(22)
-        cell.detailTextLabel!.textColor = UIColor.darkGrayColor()
+        cell.textLabel!.font = .systemFontOfSize(22)
+        cell.detailTextLabel!.textColor = .darkGrayColor()
         
         cell.accessoryType = .DisclosureIndicator
         
@@ -100,7 +100,7 @@ class MasterViewController: UITableViewController {
 		if let endDate = object.endDate {
 			days = object.startDate.daysSinceDate(endDate)
 			cell.detailTextLabel!.textColor = DarkBaseColor
-			cell.detailTextLabel!.font = UIFont.boldSystemFontOfSize(cell.detailTextLabel!.font.pointSize)
+			cell.detailTextLabel!.font = .boldSystemFontOfSize(cell.detailTextLabel!.font.pointSize)
 		} else {
 			days = object.startDate.daysSinceToday()
 		}
