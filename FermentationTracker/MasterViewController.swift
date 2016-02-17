@@ -30,6 +30,8 @@ class MasterViewController: UITableViewController {
             let controllers = split.viewControllers
             self.detailViewController = (controllers[controllers.count-1] as! UINavigationController).topViewController as? DetailViewController
         }
+		
+		makeHeaderView()
         
         if let storedData = DataManager.sharedInstance.readObjectsFromFile() {
             objects = storedData
@@ -37,6 +39,28 @@ class MasterViewController: UITableViewController {
             objects.sortInPlace { $0.startDate.daysSinceToday() < $1.startDate.daysSinceToday() }
         }
     }
+	
+	func makeHeaderView() {
+		let view = UIView(frame: CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 44))
+		view.backgroundColor = .whiteColor()
+		
+		let _ = UISegmentedControl(items: ["Alphabetical", "Time", "OG"]).then {
+			view.addSubview($0)
+			$0.snp_makeConstraints { (make) in
+				make.left.equalTo(view).offset(7.5)
+				make.top.equalTo(view).offset(7.5)
+				make.right.equalTo(view).offset(-7.5)
+				make.bottom.equalTo(view).offset(-7.5)
+			}
+			
+			$0.tintColor = LightAccent
+			$0.selectedSegmentIndex = 1
+			
+			$0.addTarget(self, action: "filterList:", forControlEvents: .ValueChanged)
+		}
+		
+		self.tableView.tableHeaderView = view
+	}
 
     override func viewWillAppear(animated: Bool) {
         self.clearsSelectionOnViewWillAppear = self.splitViewController!.collapsed
@@ -135,6 +159,25 @@ class MasterViewController: UITableViewController {
         }
     }
 
+	func filterList(sender: AnyObject) {
+		let control = sender as! UISegmentedControl
+		
+		switch control.selectedSegmentIndex {
+			case 0:
+				objects.sortInPlace{ $0.name < $1.name }
+			
+			case 1:
+				objects.sortInPlace { $0.startDate.daysSinceToday() < $1.startDate.daysSinceToday() }
+			
+			case 2:
+				objects.sortInPlace { $0.og < $1.og }
+			
+			default:
+				break
+		}
+		
+		self.tableView.reloadData()
+	}
 
 }
 
