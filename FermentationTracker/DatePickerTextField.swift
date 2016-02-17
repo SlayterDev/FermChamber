@@ -39,13 +39,13 @@ class DatePickerTextField: SharedTextField {
         
         // Create datePicker
         datePicker.setDate(NSDate(), animated: false)
-        datePicker.datePickerMode = UIDatePickerMode.Date;
-        datePicker.addTarget(self, action: "didChooseDate", forControlEvents: UIControlEvents.ValueChanged)
+        datePicker.datePickerMode = .Date;
+        datePicker.addTarget(self, action: "didChooseDate", forControlEvents: .ValueChanged)
         self.inputView = datePicker
         
         // Create "Done" button to close date picker
-        let accessoryView = DoneAccessoryView(frame: CGRectMake(0.0, 0.0, self.parentVC!.view.frame.size.width, 40.0))
-        accessoryView.doneButton!.addTarget(self, action: "closeDatePicker", forControlEvents: UIControlEvents.TouchUpInside)
+        let accessoryView = DoneAccessoryView(frame: CGRect(x: 0.0, y: 0.0, width: self.parentVC!.view.frame.size.width, height:  40.0))
+        accessoryView.doneButton!.addTarget(self, action: "closeDatePicker", forControlEvents: .TouchUpInside)
         self.inputAccessoryView = accessoryView
     }
     

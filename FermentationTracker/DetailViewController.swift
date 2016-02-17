@@ -224,7 +224,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			
 			$0.setTitle("Package Beer", forState: .Normal)
 			$0.backgroundColor = DarkBaseColor
-			$0.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+			$0.setTitleColor(.whiteColor(), forState: .Normal)
 			$0.layer.cornerRadius = 15
 			
 			$0.addTarget(self, action: "package:", forControlEvents: .TouchUpInside)

@@ -22,7 +22,7 @@ class DoneAccessoryView: UIView {
         super.init(frame: frame)
         
         self.backgroundColor = MidColor
-        doneButton = UIButton(type: UIButtonType.Custom).then {
+        doneButton = UIButton(type: .Custom).then {
             
             self.addSubview($0)
             $0.snp_makeConstraints { (make) -> Void in
@@ -31,8 +31,8 @@ class DoneAccessoryView: UIView {
                 make.bottom.equalTo(self)
                 make.width.equalTo(50.0)
             }
-            $0.setTitle("Done", forState: UIControlState.Normal)
-            $0.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+            $0.setTitle("Done", forState: .Normal)
+            $0.setTitleColor(.whiteColor(), forState: .Normal)
             $0.titleLabel?.font = UIFont(name: "Helvetica", size: 20)
         }
     }
