@@ -108,8 +108,16 @@ class MasterViewController: UITableViewController {
 		cell.imageView!.image = UIImage(named: object.type.rawValue.lowercaseString)?.makeThumbnailOfSize(CGSize(width: 40, height: 40))
 		
         cell.textLabel!.text = (object.name == "") ? "New \(object.type.rawValue)" : object.name
-        
-        cell.detailTextLabel!.text = String(format: "%d day(s) | %.3f", arguments: [days, object.og])
+		
+		var detailText = String(format: "%d day(s) | %.3f", arguments: [days, object.og])
+		
+		if let fg = object.fg {
+			let abv = (object.og - fg) * 131.25
+			let abvText = String(format: " | %.2f%%", arguments: [abv])
+			detailText += abvText
+		}
+		
+        cell.detailTextLabel!.text = detailText
         
         return cell
     }
