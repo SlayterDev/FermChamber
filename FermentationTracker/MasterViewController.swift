@@ -87,7 +87,23 @@ class MasterViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-                let object = objects[indexPath.row]
+				// BASTARD CODE - NEVER USE AGAIN
+				
+				var sectionObjs = [Beverage]()
+				for obj in objects {
+					if let _ = obj.endDate {
+						if indexPath.section == 1 {
+							sectionObjs.append(obj)
+						}
+					} else if indexPath.section == 0 {
+						sectionObjs.append(obj)
+					}
+				}
+				
+				// END BASTARD CODE
+				
+				
+                let object = sectionObjs[indexPath.row]
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
@@ -95,11 +111,27 @@ class MasterViewController: UITableViewController {
             }
         }
     }
+	
+	// MARK: - Counting
+	
+	func fermentingCount() -> (Int, Int) {
+		var fermCnt = 0
+		var doneCnt = 0
+		for obj in objects {
+			if let _ = obj.endDate {
+				doneCnt += 1
+			} else {
+				fermCnt += 1
+			}
+		}
+		
+		return (fermCnt, doneCnt)
+	}
 
     // MARK: - Table View
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return 1
+        return 2
     }
     
     override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
@@ -107,18 +139,39 @@ class MasterViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return objects.count
+		let (fermCnt, doneCnt) = fermentingCount()
+		return (section == 0) ? fermCnt : doneCnt
     }
+	
+	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+		return (section == 1) ? "Completed" : ""
+	}
 
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
-        
+		
+		// BASTARD CODE - NEVER USE AGAIN
+		
+		var sectionObjs = [Beverage]()
+		for obj in objects {
+			if let _ = obj.endDate {
+				if indexPath.section == 1 {
+					sectionObjs.append(obj)
+				}
+			} else if indexPath.section == 0 {
+				sectionObjs.append(obj)
+			}
+		}
+		
+		// END BASTARD CODE
+		
+		
         cell.textLabel!.font = .systemFontOfSize(22)
         cell.detailTextLabel!.textColor = .darkGrayColor()
         
         cell.accessoryType = .DisclosureIndicator
         
-        let object = objects[indexPath.row]
+        let object = sectionObjs[indexPath.row]
 		
 		let days: Int!
 		if let endDate = object.endDate {
