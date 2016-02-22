@@ -58,7 +58,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             if let navController = rootController.viewControllers[0] as? UINavigationController {
                 if let masterView = navController.viewControllers[0] as? MasterViewController {
                     let objects = masterView.objects
-                    DataManager.sharedInstance.writeObjectsToFile(objects)
+					let finished = masterView.finishedObjects
+                    DataManager.sharedInstance.writeObjectsToFile(objects + finished)
                 }
             }
         }

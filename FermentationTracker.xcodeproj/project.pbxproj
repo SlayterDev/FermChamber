@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		022C343C1C7B4AC7003A83AA /* ArrayExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 022C343B1C7B4AC7003A83AA /* ArrayExtensions.swift */; };
 		024F7CF51C64E87900B96794 /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4197247C1C63E0780010CA81 /* Pods.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		0276E0DB1C6416B4004D1174 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0276E0DA1C6416B4004D1174 /* Constants.swift */; };
 		02DF9FEE1C6674140044DD0D /* UIImageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DF9FED1C6674140044DD0D /* UIImageExtensions.swift */; };
@@ -44,6 +45,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		022C343B1C7B4AC7003A83AA /* ArrayExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ArrayExtensions.swift; sourceTree = "<group>"; };
 		0276E0DA1C6416B4004D1174 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		02DF9FED1C6674140044DD0D /* UIImageExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIImageExtensions.swift; sourceTree = "<group>"; };
 		419724381C63B42E0010CA81 /* FermentationTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FermentationTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +104,7 @@
 			children = (
 				02DF9FED1C6674140044DD0D /* UIImageExtensions.swift */,
 				4197246F1C63BFD20010CA81 /* DateExtensions.swift */,
+				022C343B1C7B4AC7003A83AA /* ArrayExtensions.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -381,6 +384,7 @@
 				4197246E1C63B9870010CA81 /* SharedTextField.swift in Sources */,
 				419724721C63C0F40010CA81 /* DatePickerTextField.swift in Sources */,
 				0276E0DB1C6416B4004D1174 /* Constants.swift in Sources */,
+				022C343C1C7B4AC7003A83AA /* ArrayExtensions.swift in Sources */,
 				4197243C1C63B42E0010CA81 /* AppDelegate.swift in Sources */,
 				419724701C63BFD20010CA81 /* DateExtensions.swift in Sources */,
 				419724761C63D1870010CA81 /* DataManager.swift in Sources */,

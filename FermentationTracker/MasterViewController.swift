@@ -12,7 +12,7 @@ class MasterViewController: UITableViewController {
 
     var detailViewController: DetailViewController? = nil
     var objects = [Beverage]()
-
+	var finishedObjects = [Beverage]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +37,14 @@ class MasterViewController: UITableViewController {
             objects = storedData
             
             objects.sortInPlace { $0.startDate.daysSinceToday() < $1.startDate.daysSinceToday() }
+			
+			for obj in objects {
+				if let _ = obj.endDate {
+					finishedObjects.append(obj)
+				}
+			}
+			
+			objects.removeObjectsInArray(finishedObjects)
         }
     }
 	
@@ -87,23 +95,7 @@ class MasterViewController: UITableViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showDetail" {
             if let indexPath = self.tableView.indexPathForSelectedRow {
-				// BASTARD CODE - NEVER USE AGAIN
-				
-				var sectionObjs = [Beverage]()
-				for obj in objects {
-					if let _ = obj.endDate {
-						if indexPath.section == 1 {
-							sectionObjs.append(obj)
-						}
-					} else if indexPath.section == 0 {
-						sectionObjs.append(obj)
-					}
-				}
-				
-				// END BASTARD CODE
-				
-				
-                let object = sectionObjs[indexPath.row]
+				let object = (indexPath.section == 0) ? objects[indexPath.row] : finishedObjects[indexPath.row]
                 let controller = (segue.destinationViewController as! UINavigationController).topViewController as! DetailViewController
                 controller.detailItem = object
                 controller.navigationItem.leftBarButtonItem = self.splitViewController?.displayModeButtonItem()
@@ -111,22 +103,6 @@ class MasterViewController: UITableViewController {
             }
         }
     }
-	
-	// MARK: - Counting
-	
-	func fermentingCount() -> (Int, Int) {
-		var fermCnt = 0
-		var doneCnt = 0
-		for obj in objects {
-			if let _ = obj.endDate {
-				doneCnt += 1
-			} else {
-				fermCnt += 1
-			}
-		}
-		
-		return (fermCnt, doneCnt)
-	}
 
     // MARK: - Table View
 
@@ -139,8 +115,7 @@ class MasterViewController: UITableViewController {
     }
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		let (fermCnt, doneCnt) = fermentingCount()
-		return (section == 0) ? fermCnt : doneCnt
+		return (section == 0) ? objects.count : finishedObjects.count
     }
 	
 	override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -150,28 +125,12 @@ class MasterViewController: UITableViewController {
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath)
 		
-		// BASTARD CODE - NEVER USE AGAIN
-		
-		var sectionObjs = [Beverage]()
-		for obj in objects {
-			if let _ = obj.endDate {
-				if indexPath.section == 1 {
-					sectionObjs.append(obj)
-				}
-			} else if indexPath.section == 0 {
-				sectionObjs.append(obj)
-			}
-		}
-		
-		// END BASTARD CODE
-		
-		
         cell.textLabel!.font = .systemFontOfSize(22)
         cell.detailTextLabel!.textColor = .darkGrayColor()
         
         cell.accessoryType = .DisclosureIndicator
         
-        let object = sectionObjs[indexPath.row]
+		let object = (indexPath.section == 0) ? objects[indexPath.row] : finishedObjects[indexPath.row]
 		
 		let days: Int!
 		if let endDate = object.endDate {
@@ -206,9 +165,14 @@ class MasterViewController: UITableViewController {
 
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-            objects.removeAtIndex(indexPath.row)
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-            DataManager.sharedInstance.writeObjectsToFile(objects)
+			if indexPath.section == 0 {
+				objects.removeAtIndex(indexPath.row)
+			} else {
+				finishedObjects.removeAtIndex(indexPath.row)
+			}
+			
+			tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            DataManager.sharedInstance.writeObjectsToFile(objects + finishedObjects)
         }
     }
 
@@ -218,12 +182,15 @@ class MasterViewController: UITableViewController {
 		switch control.selectedSegmentIndex {
 			case 0:
 				objects.sortInPlace{ $0.name < $1.name }
+				finishedObjects.sortInPlace { $0.name < $1.name }
 			
 			case 1:
 				objects.sortInPlace { $0.startDate.daysSinceToday() < $1.startDate.daysSinceToday() }
+				finishedObjects.sortInPlace { $0.startDate.daysSinceToday() < $1.startDate.daysSinceToday() }
 			
 			case 2:
 				objects.sortInPlace { $0.og < $1.og }
+				finishedObjects.sortInPlace { $0.og < $1.og }
 			
 			default:
 				break

@@ -240,7 +240,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         super.viewWillDisappear(animated)
         
         if let masterView = self.navigationController?.viewControllers.first as? MasterViewController {
-            DataManager.sharedInstance.writeObjectsToFile(masterView.objects)
+            DataManager.sharedInstance.writeObjectsToFile(masterView.objects + masterView.finishedObjects)
         }
     }
     
@@ -272,7 +272,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
     
     func textFieldDidEndEditing(textField: UITextField) {
         detailItem?.name = nameField!.text!
-        
+		
         if let og = ogField!.text {
             if let ogFloat = Float(og) {
                 detailItem?.og = ogFloat
@@ -281,9 +281,11 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         if let fg = fgField!.text {
             if let fgFloat = Float(fg) {
                 detailItem?.fg = fgFloat
-            }
-        }
-        
+			} else {
+				detailItem?.fg = nil
+			}
+		}
+			
         calculateABV()
     }
     
