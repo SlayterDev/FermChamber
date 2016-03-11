@@ -32,6 +32,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 		
         return true
     }
+	
+	@available(iOS 9.0, *)
+	func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+		handleShortcutItem(shortcutItem)
+	}
 
     func applicationWillResignActive(application: UIApplication) {
         writeData()
@@ -64,6 +69,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
             }
         }
     }
+	
+	@available(iOS 9.0, *)
+	private func handleShortcutItem(shortcutItem: UIApplicationShortcutItem) {
+		if let rootController = self.window?.rootViewController as? UISplitViewController {
+			if let navController = rootController.viewControllers[0] as? UINavigationController {
+				if let masterView = navController.viewControllers[0] as? MasterViewController {
+					NSTimer.scheduledTimerWithTimeInterval(0.5, target: masterView, selector: "insertNewObject:", userInfo: NSObject(), repeats: false)
+				}
+			}
+		}
+	}
 
     // MARK: - Split view
 

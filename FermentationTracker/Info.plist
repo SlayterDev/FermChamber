@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
+	<key>CFBundleDisplayName</key>
+	<string>Ferm Chamber</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -24,6 +26,17 @@
 	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIApplicationShortcutItems</key>
+	<array>
+		<dict>
+			<key>UIApplicationShortcutItemIconType</key>
+			<string>UIApplicationShortcutIconTypeAdd</string>
+			<key>UIApplicationShortcutItemTitle</key>
+			<string>Add Beverage</string>
+			<key>UIApplicationShortcutItemType</key>
+			<string>$(PRODUCT_BUNDLE_IDENTIFIER).Add</string>
+		</dict>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

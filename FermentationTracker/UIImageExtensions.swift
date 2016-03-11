@@ -12,7 +12,7 @@ extension UIImage {
 	func makeThumbnailOfSize(size: CGSize) -> UIImage {
 		UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.mainScreen().scale)
 		
-		self.drawInRect(CGRect(origin: CGPoint.zero, size: size))
+		self.drawInRect(CGRect(origin: .zero, size: size))
 		let newThumbnail = UIGraphicsGetImageFromCurrentImageContext()
 		
 		UIGraphicsEndImageContext()
