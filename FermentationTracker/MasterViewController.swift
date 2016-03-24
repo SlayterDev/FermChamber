@@ -36,7 +36,7 @@ class MasterViewController: UITableViewController {
         if let storedData = DataManager.sharedInstance.readObjectsFromFile() {
             objects = storedData
             
-            objects.sortInPlace { $0.startDate.daysSinceToday() < $1.startDate.daysSinceToday() }
+            objects.sortInPlace { $0.startDate < $1.startDate }
 			
 			for obj in objects {
 				if let _ = obj.endDate {
@@ -132,7 +132,7 @@ class MasterViewController: UITableViewController {
         
 		let object = (indexPath.section == 0) ? objects[indexPath.row] : finishedObjects[indexPath.row]
 		
-		let days: Int!
+		let days: NSDateComponents!
 		if let endDate = object.endDate {
 			days = object.startDate.daysSinceDate(endDate)
 			cell.detailTextLabel!.textColor = DarkBaseColor
@@ -145,7 +145,11 @@ class MasterViewController: UITableViewController {
 		
         cell.textLabel!.text = (object.name == "") ? "New \(object.type.rawValue)" : object.name
 		
-		var detailText = String(format: "%d day(s) | %.3f", arguments: [days, object.og])
+		var detailText = String(format: "%d day(s) | %.3f", arguments: [days.day, object.og])
+		
+		if days.month > 0 {
+			detailText = "\(days.month) month(s) " + detailText
+		}
 		
 		if let fg = object.fg {
 			let abv = (object.og - fg) * 131.25
@@ -185,8 +189,8 @@ class MasterViewController: UITableViewController {
 				finishedObjects.sortInPlace { $0.name < $1.name }
 			
 			case 1:
-				objects.sortInPlace { $0.startDate.daysSinceToday() < $1.startDate.daysSinceToday() }
-				finishedObjects.sortInPlace { $0.startDate.daysSinceToday() < $1.startDate.daysSinceToday() }
+				objects.sortInPlace { $0.startDate < $1.startDate }
+				finishedObjects.sortInPlace { $0.startDate < $1.startDate }
 			
 			case 2:
 				objects.sortInPlace { $0.og < $1.og }

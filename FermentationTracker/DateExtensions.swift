@@ -8,19 +8,27 @@
 
 import Foundation
 
-extension NSDate {
-	func daysSinceToday() -> Int {
+public func ==(lhs: NSDate, rhs: NSDate) -> Bool {
+	return lhs === rhs || lhs.compare(rhs) == .OrderedSame
+}
+
+public func <(lhs: NSDate, rhs: NSDate) -> Bool {
+	return lhs.compare(rhs) == .OrderedDescending
+}
+
+extension NSDate: Comparable {
+	func daysSinceToday() -> NSDateComponents {
         return daysSinceDate(NSDate())
     }
 	
-	func daysSinceDate(end: NSDate) -> Int {
+	func daysSinceDate(end: NSDate) -> NSDateComponents {
 		let start = self
 		
 		let cal = NSCalendar.currentCalendar()
-		let unit: NSCalendarUnit = .Day
+		let units: NSCalendarUnit = [.Day, .Month]
 		
-		let components = cal.components(unit, fromDate: start, toDate: end, options: NSCalendarOptions())
+		let components = cal.components(units, fromDate: start, toDate: end, options: NSCalendarOptions())
 		
-		return components.day
+		return components
 	}
 }

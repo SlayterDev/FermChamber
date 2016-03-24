@@ -301,14 +301,18 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			detailItem?.startDate = date
 		}
 		
-		let days: Int!
+		let days: NSDateComponents!
 		if let endDate = self.detailItem?.endDate {
 			days = date.daysSinceDate(endDate)
 		} else {
 			days = date.daysSinceToday()
 		}
 		
-        timeLabel?.text = "\(days) day(s)"
+        timeLabel?.text = "\(days.day) day(s)"
+		
+		if days.month > 0 {
+			timeLabel?.text = "\(days.month) month(s) " + timeLabel!.text!
+		}
     }
     
     func calculateABV() {
