@@ -330,9 +330,14 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 	}
 	
 	func package(sender: AnyObject) {
-		self.detailItem?.endDate = NSDate()
-		
-		let type = self.detailItem!.type.rawValue.lowercaseString
+        let type = self.detailItem?.type.rawValue.lowercaseString
+        
+        guard self.detailItem?.endDate != nil else {
+            UIAlertView(title: "Wait!", message: "Your \(type) has already been packaged!", delegate: nil, cancelButtonTitle: "Ok").show()
+            return
+        }
+        
+        self.detailItem?.endDate = NSDate()
 		
 		UIAlertView(title: "Packaged!", message: "Your \(type) has been packaged! Ferm chamber will no longer count time for this \(type).", delegate: nil, cancelButtonTitle: "Ok").show()
 	}
