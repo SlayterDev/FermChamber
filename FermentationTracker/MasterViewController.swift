@@ -24,7 +24,7 @@ class MasterViewController: UITableViewController {
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: " ", style: .Plain, target: nil, action: nil)
         self.navigationItem.title = "Ferm Chamber"
         
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "insertNewObject:")
+        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: #selector(insertNewObject(_:)))
         self.navigationItem.rightBarButtonItem = addButton
         if let split = self.splitViewController {
             let controllers = split.viewControllers
@@ -64,7 +64,7 @@ class MasterViewController: UITableViewController {
 			$0.tintColor = LightAccent
 			$0.selectedSegmentIndex = 1
 			
-			$0.addTarget(self, action: "filterList:", forControlEvents: .ValueChanged)
+			$0.addTarget(self, action: #selector(filterList(_:)), forControlEvents: .ValueChanged)
 		}
 		
 		self.tableView.tableHeaderView = view

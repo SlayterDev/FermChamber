@@ -66,8 +66,8 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillShow:"), name:UIKeyboardWillShowNotification, object: nil);
-		NSNotificationCenter.defaultCenter().addObserver(self, selector: Selector("keyboardWillHide:"), name:UIKeyboardWillHideNotification, object: nil);
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillShow(_:)), name:UIKeyboardWillShowNotification, object: nil);
+		NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(keyboardWillHide(_:)), name:UIKeyboardWillHideNotification, object: nil);
 
 		
         dateFormatter.dateFormat = "MM/dd/yyyy"
@@ -115,7 +115,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			$0.setTitleColor(UIColor.whiteColor(), forState: .Normal)
 			$0.layer.cornerRadius = 15
 			
-			$0.addTarget(self, action: "toggleDropDown:", forControlEvents: .TouchUpInside)
+			$0.addTarget(self, action: #selector(toggleDropDown(_:)), forControlEvents: .TouchUpInside)
 		}
 		
 		dropDown = DropDown().then {
@@ -173,7 +173,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
             $0.delegate = self
             
             let accessoryView = DoneAccessoryView(frame: CGRectMake(0.0, 0.0, self.view.frame.size.width, 40.0))
-            accessoryView.doneButton!.addTarget($0, action: "resignFirstResponder", forControlEvents: UIControlEvents.TouchUpInside)
+            accessoryView.doneButton!.addTarget($0, action: #selector(UIResponder.resignFirstResponder), forControlEvents: UIControlEvents.TouchUpInside)
             $0.inputAccessoryView = accessoryView
         }
         
@@ -191,7 +191,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
             $0.delegate = self
             
             let accessoryView = DoneAccessoryView(frame: CGRectMake(0.0, 0.0, self.view.frame.size.width, 40.0))
-            accessoryView.doneButton!.addTarget($0, action: "resignFirstResponder", forControlEvents: UIControlEvents.TouchUpInside)
+            accessoryView.doneButton!.addTarget($0, action: #selector(UIResponder.resignFirstResponder), forControlEvents: UIControlEvents.TouchUpInside)
             $0.inputAccessoryView = accessoryView
         }
         
@@ -227,7 +227,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 			$0.setTitleColor(.whiteColor(), forState: .Normal)
 			$0.layer.cornerRadius = 15
 			
-			$0.addTarget(self, action: "package:", forControlEvents: .TouchUpInside)
+			$0.addTarget(self, action: #selector(package(_:)), forControlEvents: .TouchUpInside)
 		}
 		
         self.configureView()

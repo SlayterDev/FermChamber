@@ -75,7 +75,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 		if let rootController = self.window?.rootViewController as? UISplitViewController {
 			if let navController = rootController.viewControllers[0] as? UINavigationController {
 				if let masterView = navController.viewControllers[0] as? MasterViewController {
-					NSTimer.scheduledTimerWithTimeInterval(0.5, target: masterView, selector: "insertNewObject:", userInfo: NSObject(), repeats: false)
+					NSTimer.scheduledTimerWithTimeInterval(0.5, target: masterView, selector: #selector(MasterViewController.insertNewObject(_:)), userInfo: NSObject(), repeats: false)
 				}
 			}
 		}
