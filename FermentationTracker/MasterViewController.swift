@@ -152,7 +152,7 @@ class MasterViewController: UITableViewController {
 		}
 		
 		if let fg = object.fg {
-			let abv = (object.og - fg) * 131.25
+			let abv = Beverage.calculateABV(object.og, fg: fg)
 			let abvText = String(format: " | %.2f%%", arguments: [abv])
 			detailText += abvText
 		}

@@ -319,7 +319,7 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         guard let ogVal = Float(ogField!.text!) else { abvLabel?.text = ""; return }
         guard let fgVal = Float(fgField!.text!) else { abvLabel?.text = ""; return }
         
-        let abv = (ogVal - fgVal) * 131.25
+        let abv = Beverage.calculateABV(ogVal, fg: fgVal)
         
         abvLabel!.text = String(format: "%.2f%% ABV", arguments: [abv])
     }

@@ -63,4 +63,12 @@ class Beverage: NSObject {
 			aCoder.encodeObject(self.endDate, forKey: "endDate")
 		}
     }
+	
+	class func calculateABV(og: Float, fg: Float) -> Float {
+		if og < 1.070 {
+			return (og - fg) * 131.25
+		} else {
+			return (76.08 * (og - fg) / (1.775 - og)) * (fg / 0.794)
+		}
+	}
 }
