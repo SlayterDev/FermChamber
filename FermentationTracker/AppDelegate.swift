@@ -24,8 +24,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UISplitViewControllerDele
 		
 		UINavigationBar.appearance().barTintColor = LightAccent
 		UINavigationBar.appearance().titleTextAttributes = [NSForegroundColorAttributeName: UIColor.whiteColor()]
-		UIBarButtonItem.appearance().tintColor = UIColor.whiteColor()
-		UINavigationBar.appearance().tintColor = UIColor.whiteColor()
+		UIBarButtonItem.appearance().tintColor = .whiteColor()
+		UINavigationBar.appearance().tintColor = .whiteColor()
 		UIApplication.sharedApplication().setStatusBarStyle(.LightContent, animated: false)
 		
 		DropDown.startListeningToKeyboard()

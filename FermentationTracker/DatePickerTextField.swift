@@ -26,14 +26,12 @@ protocol DatePickerProtocol {
 class DatePickerTextField: SharedTextField {
 
     let datePicker = UIDatePicker()
-    var parentVC: UIViewController? = nil
     var date: NSDate?
     
     var pickerDelegate: DatePickerProtocol?
     
     init(frame: CGRect, parentVC: UIViewController) {
         super.init(frame: frame)
-        self.parentVC = parentVC
         
         self.placeholder = "MM/dd/yyyy"
         
@@ -44,7 +42,7 @@ class DatePickerTextField: SharedTextField {
         self.inputView = datePicker
         
         // Create "Done" button to close date picker
-        let accessoryView = DoneAccessoryView(frame: CGRect(x: 0.0, y: 0.0, width: self.parentVC!.view.frame.size.width, height:  40.0))
+        let accessoryView = DoneAccessoryView(frame: CGRect(x: 0.0, y: 0.0, width: parentVC.view.frame.size.width, height:  40.0))
         accessoryView.doneButton!.addTarget(self, action: #selector(closeDatePicker), forControlEvents: .TouchUpInside)
         self.inputAccessoryView = accessoryView
     }

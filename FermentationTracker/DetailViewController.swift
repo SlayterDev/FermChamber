@@ -337,7 +337,6 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
         let type = self.detailItem?.type.rawValue.lowercaseString
         
         if self.detailItem?.endDate != nil {
-			print(self.detailItem?.endDate)
             UIAlertView(title: "Wait!", message: "Your \(type!) has already been packaged!", delegate: nil, cancelButtonTitle: "Ok").show()
             return
         }
