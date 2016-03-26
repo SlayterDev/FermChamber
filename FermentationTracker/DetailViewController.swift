@@ -336,14 +336,20 @@ class DetailViewController: UIViewController, DatePickerProtocol, UITextFieldDel
 	func package(sender: AnyObject) {
         let type = self.detailItem?.type.rawValue.lowercaseString
         
-        guard self.detailItem?.endDate != nil else {
-            UIAlertView(title: "Wait!", message: "Your \(type) has already been packaged!", delegate: nil, cancelButtonTitle: "Ok").show()
+        if self.detailItem?.endDate != nil {
+			print(self.detailItem?.endDate)
+            UIAlertView(title: "Wait!", message: "Your \(type!) has already been packaged!", delegate: nil, cancelButtonTitle: "Ok").show()
             return
         }
         
         self.detailItem?.endDate = NSDate()
 		
-		UIAlertView(title: "Packaged!", message: "Your \(type) has been packaged! Ferm chamber will no longer count time for this \(type).", delegate: nil, cancelButtonTitle: "Ok").show()
+		UIAlertView(title: "Packaged!", message: "Your \(type!) has been packaged!\nFerm Chamber will no longer count time for this \(type!).", delegate: nil, cancelButtonTitle: "Ok").show()
+		
+		let leftNav = self.splitViewController?.viewControllers.first as! UINavigationController
+		if let masterView = leftNav.topViewController as? MasterViewController {
+			masterView.tableView.reloadData()
+		}
 	}
 	
 	func keyboardWillShow(notification: NSNotification) {
